@@ -93,7 +93,9 @@ HIST_STAMPS="yyyy-mm-dd"
 # Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
@@ -115,7 +117,10 @@ plugins=(
     you-should-use
     zsh-bat
     z
-)
+  )
+else
+  plugins=(git history common-aliases sudo zsh-autosuggestions)
+fi
 
 source $ZSH/oh-my-zsh.sh
 
@@ -167,6 +172,7 @@ zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
 # Autojump
 #[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
+if [ -f /opt/homebrew/Caskroom/miniforge/base/bin/conda ]; then
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
 __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
@@ -181,28 +187,32 @@ else
 fi
 unset __conda_setup
 # <<< conda initialize <<<
-
+fi
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/colin/.rd/bin:$PATH"
+export PATH="$HOME/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-eval "$(~/.local/try.rb init ~/src/tries)"
+if [ -f ~/.local/try.rb ]; then
+  eval "$(~/.local/try.rb init ~/src/tries)"
+fi
 
 # NVM / FNM
-alias nvm="fnm"
-eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
+if [ -f "$(which fnm)" ]; then
+  alias nvm="fnm"
+  eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
+fi
 
 # DOTFILES
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 
-# GNU Date
-alias date=gdate
-
 # Prune git branches
 alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -D"
 
+# GNU Date
+# alias date=gdate
+
 if [ -d /boot/dietpi ]; then
   export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
-
+  /boot/dietpi/dietpi-login
 fi
