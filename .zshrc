@@ -94,13 +94,11 @@ HIST_STAMPS="yyyy-mm-dd"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  plugins=(
+plugins=(
     git
     zsh-autosuggestions
     zsh-syntax-highlighting
 #    autojump
-    brew
     command-not-found
     common-aliases
     docker
@@ -110,19 +108,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     history
     httpie
     npm
-    macos
     pip
     ssh-agent
     sudo
     you-should-use
     zsh-bat
     z
-  )
-else
-  plugins=(git history common-aliases sudo zsh-autosuggestions)
-fi
+)
 
-source $ZSH/oh-my-zsh.sh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  plugins+=(macos brew)
+fi
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -150,7 +146,6 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 #zstyle ':completion:*:kill:*' command 'ps -u $USER -o pid,%cpu,tty,cputime,cmd'
 
 ## zsh-history-substring-search configuration
-HISTORY_SUBSTRING_SEARCH_ENSURE_UNIQUE=1
 HISTORY_SUBSTRING_SEARCH_FUZZY=1
 
 # Hide the user from the prompt
@@ -164,6 +159,8 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
 
+source $ZSH/oh-my-zsh.sh
+
 #
 # HOMEBREW
 #
@@ -173,29 +170,27 @@ zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
 #[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 if [ -f /opt/homebrew/Caskroom/miniforge/base/bin/conda ]; then
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-        . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
+            . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
+        else
+            export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
+        fi
     fi
-fi
-unset __conda_setup
-# <<< conda initialize <<<
+    unset __conda_setup
+    # <<< conda initialize <<<
 fi
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="$HOME/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
-if [ -f ~/.local/try.rb ]; then
-  eval "$(~/.local/try.rb init ~/src/tries)"
-fi
+[ -f ~/.local/try.rb ] && eval "$(~/.local/try.rb init ~/src/tries)"
 
 # NVM / FNM
 if [ -f "$(which fnm)" ]; then
