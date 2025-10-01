@@ -116,9 +116,7 @@ plugins=(
     z
 )
 
-if [[ "$OSTYPE" == "darwin"* ]]; then
-  plugins+=(macos brew)
-fi
+[[ "$OSTYPE" == "darwin"* ]] && plugins+=(macos brew)
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -157,7 +155,7 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
-zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
+[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
 
 source $ZSH/oh-my-zsh.sh
 
