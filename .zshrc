@@ -1,13 +1,20 @@
 export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # history
-setopt histignorealldups sharehistory
+# setopt histignorealldups sharehistory
 export HISTSIZE=100000
 export HISTFILE=$HOME/.zsh_history
 export SAVEHIST=$HISTSIZE # This will save history for next sessions
-setopt APPEND_HISTORY
-setopt SHARE_HISTORY
-setopt INC_APPEND_HISTORY
+setopt EXTENDED_HISTORY          # Write the history file in the ":start:elapsed;command" format.
+setopt INC_APPEND_HISTORY        # Write to the history file immediately, not when the shell exits.
+setopt SHARE_HISTORY             # Share history between all sessions.
+setopt HIST_EXPIRE_DUPS_FIRST    # Expire duplicate entries first when trimming history.
+setopt HIST_IGNORE_DUPS          # Don\'t record an entry that was just recorded again.
+setopt HIST_IGNORE_ALL_DUPS      # Delete old recorded entry if new entry is a duplicate.
+setopt HIST_FIND_NO_DUPS         # Do not display a line previously found.
+setopt HIST_IGNORE_SPACE         # Don\'t record an entry starting with a space.
+setopt HIST_SAVE_NO_DUPS         # Don\'t write duplicate entries in the history file.
+setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording entry.
 
 # Load custom aliases
 [[ -s "$HOME/.bash_aliases" ]] && source "$HOME/.bash_aliases"
@@ -73,6 +80,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="yyyy-mm-dd"
 #
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -86,9 +94,9 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-    git 
-    zsh-autosuggestions 
-    zsh-syntax-highlighting 
+    git
+    zsh-autosuggestions
+    zsh-syntax-highlighting
 #    autojump
     brew
     command-not-found
@@ -97,12 +105,14 @@ plugins=(
     docker-compose
     git-extras
     git-flow
+    history
     httpie
     npm
     macos
     pip
     ssh-agent
-    you-should-use 
+    sudo
+    you-should-use
     zsh-bat
     z
 )
@@ -191,3 +201,8 @@ alias date=gdate
 
 # Prune git branches
 alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -D"
+
+if [ -d /boot/dietpi ]; then
+  export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
+
+fi
