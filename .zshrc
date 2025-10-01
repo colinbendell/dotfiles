@@ -191,10 +191,8 @@ export PATH="$HOME/.rd/bin:$PATH"
 [ -f ~/.local/try.rb ] && eval "$(~/.local/try.rb init ~/src/tries)"
 
 # NVM / FNM
-if [ -f "$(which fnm)" ]; then
-  alias nvm="fnm"
-  eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
-fi
+[ -f "$(which fnm)" ] && alias nvm="fnm"
+[ -f "$(which fnm)" ] && eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
 
 # DOTFILES
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -203,7 +201,7 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -D"
 
 # GNU Date
-# alias date=gdate
+[ -f "$(which gdate)" ] &&  alias date=gdate
 
 if [ -d /boot/dietpi ]; then
   export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
