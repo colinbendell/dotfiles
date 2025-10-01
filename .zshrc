@@ -1,10 +1,7 @@
-# Use modern completion system
-#autoload -Uz promptinit
-#promptinit
-#prompt adam1
-setopt histignorealldups sharehistory
+export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # history
+setopt histignorealldups sharehistory
 export HISTSIZE=100000
 export HISTFILE=$HOME/.zsh_history
 export SAVEHIST=$HISTSIZE # This will save history for next sessions
@@ -104,6 +101,7 @@ plugins=(
     npm
     macos
     pip
+    ssh-agent
     you-should-use 
     zsh-bat
     z
@@ -148,6 +146,8 @@ DEFAULT_USER=$USER
 POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
+
+zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
 
 #
 # HOMEBREW

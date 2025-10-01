@@ -1,2 +1,2 @@
-export PATH="$PATH:/Users/colin/.local/bin"
-if [ -e /Users/colin/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/colin/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+export PATH="$PATH:$HOME/.local/bin"
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then . $HOME/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer

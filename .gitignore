@@ -1,1 +1,27 @@
 .dotfiles
+.zsh_history
+.zsh_sessions
+*.zwc
+.z
+.tmux.conf
+
+.npm
+.oh-my-zsh
+.rd
+.rdbg_history
+.ssh
+.tessl
+.tessl_development
+
+Applications
+Desktop
+Downloads
+Documents
+Library
+Movies
+Music
+Pictures
+Public
+src
+Google Drive
+temp
