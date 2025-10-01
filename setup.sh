@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 cd $HOME
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
 
@@ -52,4 +52,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     echo "✅ Homebrew packages"
     brew bundle
   fi
+fi
+
+if [ "$SHELL" != "$(which zsh)" ]; then
+  echo "✅ Setting zsh as default shell"
+  chsh -s $(which zsh)
 fi
