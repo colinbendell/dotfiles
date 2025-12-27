@@ -110,7 +110,7 @@ plugins=(
     npm
     pip
     ssh-agent
-    sudo
+    #sudo
     you-should-use
     zsh-bat
     z
@@ -167,25 +167,8 @@ source $ZSH/oh-my-zsh.sh
 # Autojump
 #[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
-if [ -f /opt/homebrew/Caskroom/miniforge/base/bin/conda ]; then
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('/opt/homebrew/Caskroom/miniforge/base/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh" ]; then
-            . "/opt/homebrew/Caskroom/miniforge/base/etc/profile.d/conda.sh"
-        else
-            export PATH="/opt/homebrew/Caskroom/miniforge/base/bin:$PATH"
-        fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-fi
-
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="$HOME/.rd/bin:$PATH"
+export PATH="/Users/colin/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 [ -f ~/.local/try.rb ] && eval "$(~/.local/try.rb init ~/src/tries)"
@@ -207,3 +190,5 @@ if [ -d /boot/dietpi ]; then
   export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
   /boot/dietpi/dietpi-login
 fi
+
+alias cls=clear #because dos
