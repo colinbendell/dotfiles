@@ -4,6 +4,8 @@
 *.zwc
 .z
 .tmux.conf
+.tmux
+.gitconfig.local
 
 .npm
 .oh-my-zsh
@@ -13,15 +15,14 @@
 .tessl
 .tessl_development
 
-Applications
-Desktop
-Downloads
-Documents
-Library
-Movies
-Music
-Pictures
-Public
-src
-Google Drive
-temp
+Applications/
+Desktop/
+Downloads/
+Documents/
+Library/
+Movies/
+Music/
+Pictureas/
+Public/
+src/
+Google Drive*/
