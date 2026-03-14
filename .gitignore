@@ -26,3 +26,12 @@ Pictureas/
 Public/
 src/
 Google Drive*/
+
+.DS_Store
+.Trash/
+.cache/
+.local/
+.tmux/
+.viminfo
+.vscode/
+.swt
