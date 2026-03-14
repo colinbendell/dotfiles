@@ -4,8 +4,6 @@ set -e
 cd $HOME
 
 # Configuration
-alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
-
 DOTFILES_REPO="https://github.com/colinbendell/dotfiles.git"
 DOTFILES_DIR="$HOME/.dotfiles"
 ZSH_CUSTOM=${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}
@@ -39,13 +37,13 @@ git_clone() {
 # Clone dotfiles repository if not already present
 if [ ! -d "$DOTFILES_DIR" ]; then
   git clone --bare "$DOTFILES_REPO" "$DOTFILES_DIR"
-  for file in $(dotfiles log --pretty=format: --name-only --diff-filter=A|grep -v "^$"|sort -u); do
+  for file in $(git --git-dir=$DOTFILES_DIR --work-tree=$HOME log --pretty=format: --name-only --diff-filter=A|grep -v "^$"|sort -u); do
     if [ -f "$HOME/$file" ]; then
       mv "$HOME/${file}" "$HOME/${file}.$( date +%Y-%m-%dT%H:%M:%S ).backup"
       echo "⚠️  BACKUP: ${file}.$( date +%Y-%m-%dT%H:%M:%S ).backup"
     fi
   done
-  dotfiles checkout
+  git --git-dir=$DOTFILES_DIR --work-tree=$HOME checkout
 else
   echo "SKIP: Dotfiles repository already exists"
 fi
