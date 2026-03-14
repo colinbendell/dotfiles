@@ -2,6 +2,7 @@
 .zsh_history
 .zsh_sessions
 *.zwc
+.zcompdump-*
 .z
 .tmux.conf
 .tmux
@@ -15,6 +16,11 @@
 .tessl
 .tessl_development
 
+.RData
+.RHistory
+.python_history
+.node_repl_history
+
 Applications/
 Desktop/
 Downloads/
@@ -22,12 +28,11 @@ Documents/
 Library/
 Movies/
 Music/
-Pictureas/
+Pictures/
 Public/
 src/
-Google Drive*/
+*Google Drive
 
-.DS_Store
 .Trash/
 .cache/
 .local/
@@ -35,3 +40,22 @@ Google Drive*/
 .viminfo
 .vscode/
 .swt
+
+.iterm2/
+.kube/
+.lesshst
+.logseq/
+.matplotlib/
+.mongodb/
+.streamlit/
+.swiftpm/
+.vim/
+.windsurf/
+Calibre Library/
+conductor/
+go/
+.bun_repl_history
+.bun
+.bundle
+.cups
+.cursor
