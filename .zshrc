@@ -1,4 +1,4 @@
-export PATH=$HOME/bin:/usr/local/bin:$PATH
+[[ -d /boot/dietpi ]] && /boot/dietpi/dietpi-login
 
 # history
 # setopt histignorealldups sharehistory
@@ -159,17 +159,8 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 source $ZSH/oh-my-zsh.sh
 
-#
-# HOMEBREW
-#
-[[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
-
 # Autojump
 #[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/colin/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 [ -f ~/.local/try.rb ] && eval "$(~/.local/try.rb init ~/src/tries)"
 
@@ -185,10 +176,5 @@ alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print
 
 # GNU Date
 [ -f "$(which gdate)" ] &&  alias date=gdate
-
-if [ -d /boot/dietpi ]; then
-  export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
-  /boot/dietpi/dietpi-login
-fi
 
 alias cls=clear #because dos
