@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
 set -e
 
 cd $HOME
@@ -48,6 +48,33 @@ else
   echo "SKIP: Dotfiles repository already exists"
 fi
 
+if [ ! -f "$HOME/.gitconfig.local" ]; then
+  GIT_NAME=''
+  GIT_EMAIL=''
+  vared -p "Enter your name: " GIT_NAME
+  vared -p "Enter your email: " GIT_EMAIL
+
+  SSH_KEY_PATH="$HOME/.ssh/id_rsa.pub"
+  if [ ! -f "$SSH_KEY_PATH" ]; then
+    SSH_KEY_PATH=~/.ssh/$(ls -lah $HOME/.ssh|grep .pub| head -1)
+    if [ -f "$SSH_KEY_PATH" ]; then
+      echo "Creating ~/.ssh/id_rsa.pub"
+      ssh-keygen -t rsa -b 4096 -C "$GIT_EMAIL" -f $HOME/.ssh/id_rsa -N ""
+      SSH_KEY_PATH="~/.ssh/id_rsa.pub"
+    fi
+  fi
+
+  echo "✅ Creating .gitconfig.local"
+  cat <<EOL > $HOME/.gitconfig.local
+[user]
+  name = $GIT_NAME
+  email = $GIT_EMAIL
+  signingkey = $SSH_KEY_PATH
+EOL
+else
+  echo "SKIP: .gitconfig.local already exists"
+fi
+
 # Install oh-my-zsh
 curl_install "Oh My Zsh" $HOME/.oh-my-zsh "https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh"
 
@@ -79,3 +106,4 @@ if [ "$SHELL" != "$(which zsh)" ]; then
 fi
 
 echo "done."
+
