@@ -59,8 +59,10 @@ git_clone "you-should-use" "https://github.com/MichaelAquilina/zsh-you-should-us
 git_clone "powerlevel10k" "https://github.com/romkatv/powerlevel10k.git" "$ZSH_CUSTOM/themes/powerlevel10k"
 
 git_clone "oh-my-tmux" "https://github.com/gpakosz/.tmux.git" "$HOME/.tmux"
-symlink_file "$HOME/.tmux/.tmux.conf" "$HOME/.tmux.conf"
-
+if [ ! -f "$HOME/.tmux.conf" ]; then
+  ln -s -f .tmux/.tmux.conf
+  echo "✅ linking tmux.conf"
+fi
 if [[ "$OSTYPE" == "darwin"* ]]; then
   # Install packages via Homebrew (macOS only)
   curl_install "Homebrew" "/opt/homebrew/bin/brew" "https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh"
