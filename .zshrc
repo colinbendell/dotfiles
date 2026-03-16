@@ -1,4 +1,10 @@
 [[ -d /boot/dietpi ]] && /boot/dietpi/dietpi-login
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
 
 # history
 # setopt histignorealldups sharehistory
@@ -145,6 +151,7 @@ zstyle ':completion:*' completer _expand _complete _correct _approximate
 
 ## zsh-history-substring-search configuration
 HISTORY_SUBSTRING_SEARCH_FUZZY=1
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
 
 # Hide the user from the prompt
 DEFAULT_USER=$USER
@@ -155,9 +162,14 @@ POWERLEVEL9K_SHORTEN_DIR_LENGTH=1
 POWERLEVEL9K_SHORTEN_DELIMITER=""
 POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
-[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
+zstyle :omz:plugins:ssh-agent lazy-load yes
+zstyle :omz:plugins:ssh-agent lifetime 1h
 
+[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
 source $ZSH/oh-my-zsh.sh
+
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+#[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # Autojump
 #[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
@@ -167,6 +179,9 @@ source $ZSH/oh-my-zsh.sh
 # NVM / FNM
 [ -f "$(which fnm)" ] && alias nvm="fnm"
 [ -f "$(which fnm)" ] && eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
+
+# orb stack
+[[ -f  ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
 # DOTFILES
 alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
@@ -178,3 +193,5 @@ alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print
 [ -f "$(which gdate)" ] &&  alias date=gdate
 
 alias cls=clear #because dos
+
+[[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
