@@ -7,6 +7,8 @@
 .tmux.conf
 .tmux
 .gitconfig.local
+.zshrc.local
+.zshenv.local
 
 .npm
 .oh-my-zsh
