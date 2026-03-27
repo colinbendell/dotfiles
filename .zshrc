@@ -165,7 +165,7 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 zstyle :omz:plugins:ssh-agent lazy-load yes
 zstyle :omz:plugins:ssh-agent lifetime 1h
 
-[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-use-keychain
+[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-load-keychain
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -193,5 +193,6 @@ alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print
 [ -f "$(which gdate)" ] &&  alias date=gdate
 
 alias cls=clear #because dos
+alias watch=viddy
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local
