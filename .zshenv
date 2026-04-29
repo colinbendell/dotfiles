@@ -7,10 +7,7 @@ export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
 
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh # added by Nix installer
 
-if [ -d /boot/dietpi ]; then
-  export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
-  /boot/dietpi/dietpi-login
-fi
+[[ -d /boot/dietpi ]] && export PATH=/usr/bin:/boot/dietpi:/bin:/usr/sbin:/sbin:$PATH
 
 # HOMEBREW
 [[ -x /opt/homebrew/bin/brew ]] && eval $(/opt/homebrew/bin/brew shellenv)
