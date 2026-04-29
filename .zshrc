@@ -164,8 +164,8 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 zstyle :omz:plugins:ssh-agent lazy-load yes
 zstyle :omz:plugins:ssh-agent lifetime 1h
-
-[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args --apple-load-keychain
+zstyle :omz:plugins:ssh-agent ssh-add-args -q
+[[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args -q --apple-load-keychain
 source $ZSH/oh-my-zsh.sh
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
