@@ -164,7 +164,7 @@ POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_right"
 
 zstyle :omz:plugins:ssh-agent lazy-load yes
 zstyle :omz:plugins:ssh-agent lifetime 1h
-zstyle :omz:plugins:ssh-agent ssh-add-args -q
+zstyle :omz:plugins:ssh-agent quiet yes
 [[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args -q --apple-load-keychain
 source $ZSH/oh-my-zsh.sh
 
