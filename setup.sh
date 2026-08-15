@@ -54,14 +54,12 @@ if [ ! -f "$HOME/.gitconfig.local" ]; then
   vared -p "Enter your name: " GIT_NAME
   vared -p "Enter your email: " GIT_EMAIL
 
-  SSH_KEY_PATH="$HOME/.ssh/id_rsa.pub"
-  if [ ! -f "$SSH_KEY_PATH" ]; then
-    SSH_KEY_PATH=~/.ssh/$(ls -lah $HOME/.ssh|grep .pub| head -1)
-    if [ -f "$SSH_KEY_PATH" ]; then
-      echo "Creating ~/.ssh/id_rsa.pub"
-      ssh-keygen -t rsa -b 4096 -C "$GIT_EMAIL" -f $HOME/.ssh/id_rsa -N ""
-      SSH_KEY_PATH="~/.ssh/id_rsa.pub"
-    fi
+  # Use an existing public key if there is one, otherwise create an ed25519 key
+  SSH_KEY_PATH=$(ls "$HOME"/.ssh/*.pub 2>/dev/null | head -1)
+  if [ -z "$SSH_KEY_PATH" ]; then
+    echo "Creating ~/.ssh/id_ed25519"
+    ssh-keygen -t ed25519 -C "$GIT_EMAIL" -f "$HOME/.ssh/id_ed25519" -N ""
+    SSH_KEY_PATH="$HOME/.ssh/id_ed25519.pub"
   fi
 
   echo "✅ Creating .gitconfig.local"
@@ -97,6 +95,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   if [ -f "Brewfile" ]; then
     echo "✅ Homebrew packages"
     brew bundle
+  fi
+else
+  # Linux: no Homebrew. Use mise to fetch prebuilt CLI binaries (cross-arch, no
+  # compiler needed). Installing via mise keeps them on the PATH that
+  # `mise activate` already sets up in .zshrc.
+  curl_install "mise" "$HOME/.local/bin/mise" "https://mise.run"
+  MISE="$HOME/.local/bin/mise"
+  [ -x "$MISE" ] || MISE=$(command -v mise)
+  if [ -x "$MISE" ]; then
+    echo "✅ CLI tools via mise"
+    "$MISE" use -g bat eza zoxide delta atuin
   fi
 fi
 

@@ -28,7 +28,6 @@ setopt HIST_REDUCE_BLANKS        # Remove superfluous blanks before recording en
 #ENV
 export ZSH=$HOME/.oh-my-zsh
 export DEVDIR=$HOME/src
-export TERM=xterm-256color
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -104,7 +103,6 @@ HIST_STAMPS="yyyy-mm-dd"
 plugins=(
     git
     zsh-autosuggestions
-    zsh-syntax-highlighting
 #    autojump
     command-not-found
     common-aliases
@@ -120,10 +118,12 @@ plugins=(
     #sudo
     you-should-use
     zsh-bat
-    z
 )
 
 [[ "$OSTYPE" == "darwin"* ]] && plugins+=(macos brew)
+
+# zsh-syntax-highlighting must be sourced last, after every widget-defining plugin
+plugins+=(zsh-syntax-highlighting)
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _expand _complete _correct _approximate
@@ -169,6 +169,9 @@ zstyle :omz:plugins:ssh-agent quiet yes
 [[ "$OSTYPE" == "darwin"* ]] && zstyle ':omz:plugins:ssh-agent' ssh-add-args -q --apple-load-keychain
 source $ZSH/oh-my-zsh.sh
 
+# common-aliases sets fd='find . -type d -name'; drop it (shadows the fd tool, unused)
+unalias fd 2>/dev/null
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 #[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -177,9 +180,13 @@ source $ZSH/oh-my-zsh.sh
 
 [ -f ~/.local/try.rb ] && eval "$(~/.local/try.rb init ~/src/tries)"
 
-# NVM / FNM
-[ -f "$(which fnm)" ] && alias nvm="fnm"
-[ -f "$(which fnm)" ] && eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
+# Runtime version manager: mise supersedes fnm (both hook chpwd, so activate only one)
+if (( $+commands[mise] )); then
+  eval "$(mise activate zsh)"
+elif (( $+commands[fnm] )); then
+  alias nvm="fnm"
+  eval "$(fnm --version-file-strategy=recursive --log-level=quiet env --use-on-cd --shell zsh)"
+fi
 
 # orb stack
 [[ -f  ~/.orbstack/shell/init.zsh ]] && source ~/.orbstack/shell/init.zsh 2>/dev/null || :
@@ -191,9 +198,25 @@ alias dotfiles='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
 alias gitprune="git fetch --all --prune && git branch -vv | awk '/: gone]/{print \$1}' | xargs git branch -D"
 
 # GNU Date
-[ -f "$(which gdate)" ] &&  alias date=gdate
+(( $+commands[gdate] )) && alias date=gdate
 
 alias cls=clear #because dos
 alias watch=viddy
+
+# Remote hosts may lack ghostty/tmux terminfo; send a universally-supported TERM.
+# Keeps the local terminal's own TERM (e.g. xterm-ghostty) untouched.
+ssh() {
+  TERM=xterm-256color command ssh "$@"
+}
+
+# Modern CLI tools (guarded so the rc still works where they're not installed)
+(( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
+(( $+commands[atuin] ))  && eval "$(atuin init zsh)"
+if (( $+commands[eza] )); then
+  alias ls='eza --icons --group-directories-first'
+  alias ll='eza -l --icons --group-directories-first --git'
+  alias la='eza -la --icons --group-directories-first --git'
+  alias lt='eza --tree --level=2 --icons'
+fi
 
 [[ -f ~/.zshrc.local ]] && source ~/.zshrc.local

@@ -10,7 +10,7 @@ curl -fsSL https://raw.githubusercontent.com/colinbendell/dotfiles/main/setup.sh
 
 This will:
 
-- Clone this dotfiles repository to `~/.dotfiles` and backup existing fiels (.zshrc, etc)
+- Clone this dotfiles repository to `~/.dotfiles` and backup existing files (.zshrc, etc)
 - Install oh-my-zsh and plugins
 - Install oh-my-tmux
 - Install Homebrew (macOS only)

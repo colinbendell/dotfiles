@@ -12,6 +12,12 @@ brew "cloudflared"
 brew "cmake"
 brew "container", link: false
 brew "coreutils"
+brew "bat" # cat with syntax highlighting (used by zsh-bat plugin)
+brew "eza" # modern ls
+brew "zoxide" # smarter cd (replaces the z plugin)
+brew "atuin" # searchable, syncable shell history
+brew "mise" # polyglot runtime version manager (replaces fnm/nvm/pyenv)
+brew "git-delta" # syntax-highlighting git pager
 brew "exiftool"
 brew "ffmpeg"
 brew "zstd"

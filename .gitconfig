@@ -5,8 +5,17 @@
     helper = osxkeychain
 [merge]
     ff = only
+    conflictstyle = zdiff3
 [core]
 	excludesfile = ~/.gitignore_global
+	pager = delta 2>/dev/null || less
+[interactive]
+	diffFilter = delta --color-only 2>/dev/null || cat
+[delta]
+	navigate = true
+	line-numbers = true
+[diff]
+	colorMoved = default
 [credential "https://github.com"]
 	helper = 
 	helper = !/opt/homebrew/bin/gh auth git-credential
