@@ -3,7 +3,7 @@ export PATH="$HOME/bin:/usr/local/bin:$PATH"
 export PATH="$HOME/.cargo/bin:$PATH"
 export PATH="$HOME/go/bin:$PATH"
 export PATH="/opt/homebrew/opt/rustup/bin:$PATH"
-
+export PATH="/opt/homebrew/opt/curl/bin:$PATH"
 
 [[ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]] && . $HOME/.nix-profile/etc/profile.d/nix.sh # added by Nix installer
 
