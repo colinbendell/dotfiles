@@ -211,7 +211,7 @@ ssh() {
 
 # Modern CLI tools (guarded so the rc still works where they're not installed)
 (( $+commands[zoxide] )) && eval "$(zoxide init zsh)"
-(( $+commands[atuin] ))  && eval "$(atuin init zsh)"
+(( $+commands[atuin] ))  && eval "$(atuin init zsh --disable-up-arrow)"
 if (( $+commands[eza] )); then
   alias ls='eza --icons --group-directories-first'
   alias ll='eza -l --icons --group-directories-first --git'
