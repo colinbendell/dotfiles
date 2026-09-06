@@ -1,6 +1,3 @@
-[include]
-    path = ~/.gitconfig.local
-    path = ~/.config/dev/gitconfig
 [credential]
     helper = osxkeychain
 [merge]
@@ -32,3 +29,6 @@
 	autoSetupRemote = true
 [url "git@github.com:"]
 	insteadOf = https://github.com/
+[include]
+    path = ~/.gitconfig.local
+    path = ~/.config/dev/gitconfig
