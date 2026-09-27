@@ -5,7 +5,7 @@
     conflictstyle = zdiff3
 [core]
 	excludesfile = ~/.gitignore_global
-	pager = delta 2>/dev/null || less
+	pager = delta 2>/dev/null || less || more
 [interactive]
 	diffFilter = delta --color-only 2>/dev/null || cat
 [delta]
